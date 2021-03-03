@@ -9,9 +9,10 @@ def to_file(filename, msg):
             return "Failed to writing to the file."
 
 def customize_text(type, source_text, target_text):
-    if target_text == None:
-        return "Incorrect type"
     return f"{type}({source_text}) = {target_text}"
 
-def is_valid(text):
-    return re.match(r"[a-z]+", text)
+def alphabet_only(text):
+    return re.match(r"^[a-z]+$", text)
+
+def check_type(type):
+    return type == "e" or type == "d"
