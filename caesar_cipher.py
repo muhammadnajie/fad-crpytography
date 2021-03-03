@@ -1,26 +1,13 @@
 #!/usr/bin/env python3
 
-import math
-import re
+from utilz import *
 
-def to_file(msg):
-    with open("result.txt", "w") as f:
-        f.write(msg)
-
-def customize_text(type, source_text, target_text):
-    if target_text == None:
-        return "Incorrect type"
-    return f"{type}({source_text}) = {target_text}"
-
-def is_valid(text):
-    return re.match(r"[a-z]+", text)
-
-def encrypt(plain_text, key):
-    if not is_valid(plain_text):
+def encrypt(plaintext, key):
+    if not is_valid(plaintext):
         return "Incorrect message (Text only)"
 
     int_key = int(key)
-    ciphertext = [chr((ord(char)-97+int_key)%26+97) for char in plain_text]
+    ciphertext = [chr((ord(char)-97+int_key)%26+97) for char in plaintext]
     return "".join(ciphertext)
 
 def decrypt(ciphertext, key):
@@ -34,16 +21,18 @@ def decrypt(ciphertext, key):
 
 def main():
     type = input("[e,d]?")
-    source_text = input("from: ")
+    source_text = input("text: ")
+    key = input("key: ")
     target_text = None
     if type == "e":
-        print("encrypt")
+        target_text = encrypt(source_text, key)
     elif type == "d":
-        print("decrypt")
+        target_text = decrypt(source_text, key)
 
     msg = customize_text(type, source_text, target_text)
-    to_file(msg)
+    status = to_file("caeshar_cipher_result.txt", msg)
+    print(status)
 
-#main()
+main()
     
     
