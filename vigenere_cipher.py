@@ -3,6 +3,7 @@
 from math import ceil
 from string import ascii_lowercase
 from utilz import *
+import sys
 
 def generate_matrix():
     matrix = []
@@ -30,18 +31,12 @@ def adjust_key(text, key):
     return key[:text_len]
 
 def encrypt(plaintext, key):
-    if not is_valid(plaintext):
-        return "Incorrect message"
-
     ciphertext = ""
     for i in range(len(plaintext)):
         ciphertext += CIPHER_MATRIX[ord(plaintext[i])-97][ord(key[i])-97]
     return ciphertext
 
 def decrypt(ciphertext, key):
-    if not is_valid(plaintext):
-        return "Incorrect message"
-
     plaintext = ""
     for i in range(len(ciphertext)):
         asc = ord(ciphertext[i])-ord(key[i])
@@ -51,19 +46,41 @@ def decrypt(ciphertext, key):
     return plaintext
 
 def main():
+    """
+    Limitation: Only processes text that contains alphabet only
+    Assumption: The input file contains only one line of text 
+    """
     type = input("[e,d]?")
-    source_text = input("text: ")
     key = input("key: ")
+
+    correct_type = check_type(type)
+    if not correct_type:
+        type = False
+
+    if not alphabet_only(key):
+        key = False
+
+    try:
+        with open("source.txt", "r") as f:
+            source_text = f.readline()
+            if not alphabet_only(source_text):
+                source_text = False
+                target_text = 'Incorrect message'
+    except:
+        sys.exit("Failed read source file")
+
+
+    if not all([type, key, source_text]):
+        sys.exit("Operation failed.")
+    
     key = adjust_key(source_text, key)
-    target_text = None
     if type == "e":
         target_text = encrypt(source_text, key)
     elif type == "d":
         target_text = decrypt(source_text, key)
-
     msg = customize_text(type, source_text, target_text)
     status = to_file("vigenere_cipher_result.txt", msg)
     print(status)
 
 CIPHER_MATRIX = generate_matrix()
-# main()
+main()
