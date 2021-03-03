@@ -31,7 +31,7 @@ def adjust_key(text, key):
 
 def encrypt(plaintext, key):
     if not is_valid(plaintext):
-        return "Incorrect message (Text only)"
+        return "Incorrect message"
 
     ciphertext = ""
     for i in range(len(plaintext)):
@@ -40,7 +40,7 @@ def encrypt(plaintext, key):
 
 def decrypt(ciphertext, key):
     if not is_valid(plaintext):
-        return "Incorrect message (Text only)"
+        return "Incorrect message"
 
     plaintext = ""
     for i in range(len(ciphertext)):
@@ -66,4 +66,4 @@ def main():
     print(status)
 
 CIPHER_MATRIX = generate_matrix()
-main()
+# main()

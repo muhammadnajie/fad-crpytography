@@ -4,7 +4,7 @@ from utilz import *
 
 def encrypt(plaintext, key):
     if not is_valid(plaintext):
-        return "Incorrect message (Text only)"
+        return "Incorrect message"
 
     int_key = int(key)
     ciphertext = [chr((ord(char)-97+int_key)%26+97) for char in plaintext]
@@ -12,7 +12,7 @@ def encrypt(plaintext, key):
 
 def decrypt(ciphertext, key):
     if not is_valid(ciphertext):
-        return "Incorrect message (Text only)"
+        return "Incorrect message"
 
     int_key = int(key)
     ciphertext = [chr((ord(char)-97-int_key)%26+97) for char in ciphertext]
