@@ -4,11 +4,8 @@ from utilz import *
 from string import ascii_lowercase
 import re
 
-def generate_matrix(key):
-    matrix = []
-    for i in range(5):
-        matrix.append(key[i*5:(i+1)*5])
-    return matrix
+def generate_matrix_key(key):
+    return [key[i:i+5] for i in range(0, 25, 5)]
 
 def adjust_key(key):
     """
@@ -84,7 +81,7 @@ def main():
     # key = input("key: ")
     key = "jalan ganesha sepuluh"
     key = adjust_key(key)
-    ref_matrix = generate_matrix(key)
+    ref_matrix = generate_matrix_key(key)
     plaintext = "temui ibu nanti malam "
     # plaintext = "kirito"
     plaintext = re.sub("j", "i", plaintext)
